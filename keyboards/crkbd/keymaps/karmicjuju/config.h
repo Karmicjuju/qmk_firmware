@@ -29,7 +29,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define TAPPING_FORCE_HOLD
 
 #ifdef OLED_ENABLE
-    #define OLED_DISPLAY_128X32
+    #define OLED_DISPLAY_128X64
     #define OLED_TIMEOUT 30000
 #endif
 
