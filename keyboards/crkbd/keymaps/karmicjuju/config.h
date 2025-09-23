@@ -28,6 +28,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define PERMISSIVE_HOLD
 #define TAPPING_FORCE_HOLD
 
+#ifdef OLED_ENABLE
+    #define OLED_DISPLAY_128X32
+    #define OLED_TIMEOUT 30000
+#endif
+
 #define LEADER_TIMEOUT 300
 
 #ifdef RGBLIGHT_ENABLE
