@@ -155,6 +155,24 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) {
     return rotation;
 }
 
+// SIMPLIFIED TEST FUNCTION - Replace with backup once working
+bool oled_task_user(void) {
+    // Simple test - just display "OLED TEST" on both displays
+    oled_write_P(PSTR("OLED TEST\n"), false);
+    oled_write_P(PSTR("v4.1 CRKBD\n"), false);
+    oled_write_P(PSTR("Working!\n"), false);
+
+    // Display which side this is
+    if (is_keyboard_master()) {
+        oled_write_P(PSTR("Master Side\n"), false);
+    } else {
+        oled_write_P(PSTR("Slave Side\n"), false);
+    }
+
+    return false;
+}
+
+/* ORIGINAL FUNCTION - Restore once OLED is confirmed working
 bool oled_task_user(void) {
     if (is_keyboard_master()) {
         // Host Keyboard Layer Status
@@ -194,4 +212,5 @@ bool oled_task_user(void) {
     }
     return false;
 }
+*/
 #endif

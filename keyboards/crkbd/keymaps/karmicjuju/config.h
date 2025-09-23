@@ -22,6 +22,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 //#define USE_MATRIX_I2C
 
+/* I2C Configuration for v4.1 OLED Support */
+#define I2C_DRIVER I2CD1
+#define I2C1_SDA_PIN GP6
+#define I2C1_SCL_PIN GP7
+
 //#define QUICK_TAP_TERM 0
 //#define TAPPING_TERM 100
 #define TAPPING_TERM 200
