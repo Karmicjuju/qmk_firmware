@@ -65,17 +65,25 @@ With keyboard powered on, measure:
 
 ## Flashing Instructions for RP2040 (v4.1)
 
-1. **Enter bootloader mode**:
+1. **Build the firmware**:
+   ```bash
+   cd /home/karmic/Documents/Git/qmk_firmware
+   qmk compile -kb crkbd/rev4_1/standard -km karmicjuju
+   ```
+
+2. **Enter bootloader mode**:
    - Hold BOOT button while connecting USB, OR
    - While connected, hold BOOT and tap RESET
 
-2. **RPI-RP2 drive appears**
+3. **RPI-RP2 drive appears**
 
-3. **Copy firmware**:
-   - Drag `.build/crkbd_rev4_1_karmicjuju.uf2` to the drive
+4. **Copy firmware**:
+   - Drag `.build/crkbd_rev4_1_standard_karmicjuju.uf2` to the drive
    - Drive will disconnect automatically
 
-4. **Repeat for other half**
+5. **Repeat for other half**
+
+**IMPORTANT**: Fixed configuration removes incorrect I2C pins (GP6/GP7 are encoder pins, not I2C!)
 
 ## Restoring Original OLED Function
 

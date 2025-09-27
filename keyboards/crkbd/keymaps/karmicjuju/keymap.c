@@ -99,7 +99,7 @@ void leader_end_user(void) {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [L_BASE] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      QK_GESC,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,  KC_DEL,
+       KC_ESC,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,  KC_DEL,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_LCTL,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                         KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, KC_QUOT,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -112,11 +112,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [L_SYM] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      _______,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                        KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10, _______,
+       KC_GRV,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                        KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                         KC_6,    KC_7,    KC_8,    KC_9,    KC_0, KC_BSLS,
+      _______,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                         KC_6,    KC_7,    KC_8,    KC_9,    KC_0, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, KC_LPRN, KC_RPRN, KC_LCBR, KC_RCBR, KC_BSLS,                      KC_LBRC, KC_RBRC, KC_UNDS,  KC_EQL, KC_MINS, KC_PLUS,
+      _______, KC_LPRN, KC_RPRN, KC_LCBR, KC_RCBR, KC_BSLS,                      KC_LBRC, KC_RBRC, KC_MINS,  KC_EQL, KC_BSLS, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           _______, _______, _______,    _______, _______, _______
                                       //`--------------------------'  `--------------------------'
@@ -124,11 +124,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [L_NAV] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      _______, INP_ONE, INP_TWO, _______, _______, _______,                      KC_HOME, KC_PGUP, KC_PGDN,  KC_END, XXXXXXX, KC_BSPC,
+       KC_GRV, INP_ONE, INP_TWO, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_HOME, KC_PGDN, KC_PGUP,  KC_END, XXXXXXX, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, KC_BSLS,  KC_GRV,
+      _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, KC_BSLS, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, XXXXXXX,XXXXXXX,CPY_SMART,PST_SMART,XXXXXXX,                       TMUX_P, XXXXXXX, XXXXXXX,  TMUX_N, XXXXXXX, XXXXXXX,
+      _______, XXXXXXX,XXXXXXX,CPY_SMART,PST_SMART,XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           _______, _______, _______,    _______, _______, _______
                                       //`--------------------------'  `--------------------------'
@@ -142,7 +142,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       RM_NEXT, RM_HUED, RM_SATD, RM_VALD, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          KC_LGUI, _______,  KC_SPC,     KC_ENT, _______, KC_RALT
+                                          _______, _______, _______,    _______, _______, _______
                                       //`--------------------------'  `--------------------------'
   )
 };
@@ -155,20 +155,35 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) {
     return rotation;
 }
 
-// SIMPLIFIED TEST FUNCTION - Replace with backup once working
-bool oled_task_user(void) {
-    // Simple test - just display "OLED TEST" on both displays
-    oled_write_P(PSTR("OLED TEST\n"), false);
-    oled_write_P(PSTR("v4.1 CRKBD\n"), false);
-    oled_write_P(PSTR("Working!\n"), false);
+// DEBUG VERSION - Uses RGB to indicate OLED initialization status
+void keyboard_post_init_user(void) {
+    // Force RGB on with solid blue to show keyboard initialized
+    #ifdef RGB_MATRIX_ENABLE
+    rgb_matrix_enable_noeeprom();
+    rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_COLOR);
+    rgb_matrix_sethsv_noeeprom(170, 255, 50);  // Blue
+    #endif
+}
 
-    // Display which side this is
-    if (is_keyboard_master()) {
-        oled_write_P(PSTR("Master Side\n"), false);
-    } else {
-        oled_write_P(PSTR("Slave Side\n"), false);
+void housekeeping_task_user(void) {
+    static bool changed = false;
+    static uint32_t change_timer = 0;
+
+    if (!changed) {
+        if (change_timer == 0) {
+            change_timer = timer_read32();
+        } else if (timer_elapsed32(change_timer) > 2000) {
+            changed = true;
+            #ifdef RGB_MATRIX_ENABLE
+            rgb_matrix_sethsv_noeeprom(85, 255, 50);  // Green after 2 seconds
+            #endif
+        }
     }
+}
 
+bool oled_task_user(void) {
+    // Absolute minimum OLED code
+    oled_write_P(PSTR("TEST"), false);
     return false;
 }
 
